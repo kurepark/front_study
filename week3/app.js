@@ -84,3 +84,4 @@ app();
 
 //navigator.userAgent ->현재 사용하고 있는 브라우저를 알려줌.
 //개발자도구 network conditions userAgent에서 접속기기를 변경할 수 있다.
+
