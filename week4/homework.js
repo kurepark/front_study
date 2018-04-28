@@ -25,7 +25,6 @@ function map(array, callbackFn){
     for(var i = 0; i < array.length; i++){
         console.log('배열'+array[i]);
         callbackFn(array[i])//배열을 콜백함수의 인자로
-        console.log(callbackFn(array[i]));//콘솔까지 제대로 찍힘
+        console.log('for문 확인',callbackFn(array[i]));//콘솔까지 제대로 찍힘
     }
-
 }
