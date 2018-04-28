@@ -25,10 +25,8 @@ function map(array, callbackFn){
     var arr2 = [];
     for(var i = 0; i < array.length; i++) {
         console.log('배열' + array[i]);
-        var result = callbackFn(array[i]);//배열을 콜백함수의 인자로
+        arr2[i] = callbackFn(array[i]);//배열을 콜백함수의 인자로
         //console.log('for문 확인',callbackFn(array[i]));//콘솔까지 제대로 찍힘
-        console.log('변수확인', result);//변수에 담긴것도 잘 찍힘
-        arr2[i] = result;
     }
         return arr2;
 }
