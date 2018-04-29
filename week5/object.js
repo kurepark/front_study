@@ -57,11 +57,14 @@ var totalCount = response.c;
 var imagePath = response.i;
 var members = response.l;//콘솔에서 response를 찍어보면 c, i, l, m, n등이 나온다. 확인해보자
 
+
 var memberLiElement = members.map(function(v){
         var src = v.p !== 'N' ? imagePath + v.p : '';//v.p가 N이 아니면 이미지주소를 N이면 빈문자열을
+        var className = src ? '' : 'no-image';//삼항연산자를 이용해 src를 검사, true면 빈문자열, false면 no-image
 
         console.log(v);//v는 배열 하나하나를 의미한다
-        return '<li><span><img src=" '+ src +'" /></span>'+v.n+'</li>'
+        return '<li class="'+className+'"><span><img src=" '+ src +'" /></span>'+v.n+'</li>'
+
 }).join('');//반환된 배열에 join을 사용해 빈 문자열을 넣으면 배열안에 있는 것들을 하나의 문자열로 만들어준다
 console.log(memberLiElement);
 //접속인원수 출력
