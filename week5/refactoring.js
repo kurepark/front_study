@@ -57,20 +57,48 @@ var totalCount = response.c;
 var imagePath = response.i;
 var members = response.l;//콘솔에서 response를 찍어보면 c, i, l, m, n등이 나온다. 확인해보자
 
-var randomCount = Math.floor(Math.random() * totalCount);//랜덤수 계산
 
-console.log(randomCount);
 
-var memberLiElement = members.map(function(v){
-        var src = v.p !== 'N' ? imagePath + v.p : '';//v.p가 N이 아니면 이미지주소를 N이면 빈문자열을
-        var className = src ? '' : 'no-image';//삼항연산자를 이용해 src를 검사, true면 빈문자열, false면 no-image
+var memberLiElement = function(){// 실행했을때 값을 반환
+    var randomNumber = Math.floor(Math.random() * totalCount);
+    var newMembers = members.filter(function(v, i){
+        
+        //return i > 20;//index가 20번 이상인 것만 보여줌, 객체가 현재 50까지 있으니 51 이상은 찍히지 않는다.
+        return i > randomNumber;
+    }) //새로운 배열을 만든다.
 
-        //console.log(v);//v는 배열 하나하나를 의미한다
-        return '<li class="'+className+'"><span><img src=" '+ src +'" /></span>'+v.n+'</li>'
-}).join('');//
 
+
+    return {
+        totalCount : newMembers.length,
+        members :newMembers.map(function(v){
+            var src = v.p !== 'N' ? imagePath + v.p : '';//v.p가 N이 아니면 이미지주소를 N이면 빈문자열을
+            var className = src ? '' : 'no-image';//삼항연산자를 이용해 src를 검사, true면 빈문자열, false면 no-image
+
+            //console.log(v);//v는 배열 하나하나를 의미한다
+            return '<li class="'+className+'"><span><img src=" '+ src +'" /></span>'+v.n+'</li>';
+        }).join()
+    }
+
+}
+
+
+
+/*var memberLiElement = members.map(function(v){ //변수에 넣으면 한번만 반환
+    var src = v.p !== 'N' ? imagePath + v.p : '';//v.p가 N이 아니면 이미지주소를 N이면 빈문자열을
+    var className = src ? '' : 'no-image';//삼항연산자를 이용해 src를 검사, true면 빈문자열, false면 no-image
+
+    //console.log(v);//v는 배열 하나하나를 의미한다
+    return '<li class="'+className+'"><span><img src=" '+ src +'" /></span>'+v.n+'</li>';
+}).join('');//*/
+
+setInterval(function(){
+    var memberElement = memberLiElement();
+    document.getElementById('app').innerHTML = '<div>접속 멤버' + memberElement.totalCount + '명<ul>'+memberElement.members+'</ul></div>';
+},1000);
+//이전엔 값이었기에 memberLiElement였지만 이제 함수가 되었기 때문에 실행을 해야한다.
 
 //접속인원수 출력
-document.body.innerHTML = '<div>접속 멤버' + totalCount + '명<ul>'+memberLiElement+'</ul></div>';
+
 
 
