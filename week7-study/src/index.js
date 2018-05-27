@@ -55,7 +55,4 @@ f1.work();
 f1.work();
 f1.work();
 f1.work();
-f1.work();
-f1.work();
-f1.work();
 console.log(f1);
