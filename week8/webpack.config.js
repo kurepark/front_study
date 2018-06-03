@@ -7,7 +7,12 @@ module.exports = {
         filename: "index.bundle.js"
     },
     module : {
-        rules: [{
+        rules: [/*{
+            loader:'eslint-loader',
+            test:/\.js$/,
+            exclude:/node_modules/,
+            enforce:'pre'
+        },*/ {
             loader: "babel-loader",
             test: /\.js$/,
             exclude : /node_modules/
