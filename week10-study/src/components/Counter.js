@@ -11,7 +11,7 @@ class Counter extends React.Component {
     render(){
         console.log('render');
         return(
-            <div onClick={this.props.onclick}>
+            <div onClick={this.props.onClick}>
                 <div>카운터 컴포넌트</div>
                 <div>
                     <span>{this.props.children}</span>
