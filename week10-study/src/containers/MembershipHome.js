@@ -5,7 +5,7 @@ class MembershipHome extends React.Component {
     constructor() {
         super();
         this.state = {
-            membershipLevel : 'guest'
+            membershipLevel : 'member'
         }
     }
     render() {
