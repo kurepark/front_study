@@ -33,7 +33,8 @@ export default class Guest extends React.Component {
                         isOpen : true
                     })
                 }}>혜택보기</Button>
-                <Button type="primary" onClick={this.props.onRegister}>가입하기</Button>
+                    <Button type="primary" onClick={this.props.onLimitRegister}>30일 가입하기</Button>
+                    <Button type="default" onClick={this.props.onRegister}>정회원 가입하기</Button>
                 </div>
                 <Modal
                     isOpen={this.state.isOpen}
