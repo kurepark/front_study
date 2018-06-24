@@ -1,12 +1,13 @@
 import React from 'react';
 import {Guest,Trial,Member} from '../components/membership/index';
 import MainDrawer from "../components/MainDrawer";
+import MembershipLevelType from "../enums/MembershipLevelType";
 
 class MembershipHome extends React.Component {
     constructor() {
         super();
         this.state = {
-            membershipLevel : 'guest'
+            membershipLevel : MembershipLevelType.GUEST
         }
         this.onRegister = this.onRegister.bind(this);//onRegister에는 this를 바인딩 한다.
         //onRegister의 this를 항상 멤버쉼홈의 this로 박아버림.
@@ -20,13 +21,13 @@ class MembershipHome extends React.Component {
         //실행은 아래 게스트.js안에 있는 가입하기 버튼의 온클릭일때 실행.
         //따라서 this.setState의 this가 undefined.
         this.setState({
-            membershipLevel : 'trial'
+            membershipLevel : MembershipLevelType.TRIAL
         });
     }
     onUnRegister(){
         alert('멤버쉽이 해지되었습니다');
         this.setState({
-            membershipLevel : 'guest'
+            membershipLevel : MembershipLevelType.GUEST
         });
     }
 
@@ -38,10 +39,11 @@ class MembershipHome extends React.Component {
         );
     }
     render() {
+        const {GUEST,TRIAL,MEMBER} = MembershipLevelType;//한 함수안에서 여러번쓸땐 이렇게 해체.
         switch (this.state.membershipLevel) {
-            case 'guest' : return this.withMainDrawer(<Guest onRegister={this.onRegister} />); //함수자체를 전달
-            case 'trial' : return this.withMainDrawer(<Trial onUnRegister={this.onUnRegister} />);
-            case 'member' : return this.withMainDrawer(<Member onUnRegister={this.onUnRegister} />);
+            case GUEST : return this.withMainDrawer(<Guest onRegister={this.onRegister} />); //함수자체를 전달
+            case TRIAL : return this.withMainDrawer(<Trial onUnRegister={this.onUnRegister} />);
+            case MEMBER : return this.withMainDrawer(<Member onUnRegister={this.onUnRegister} />);
             default : return <Guest/>;
         }
     }
