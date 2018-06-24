@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import {Button, WingBlank} from 'antd-mobile';
 
 const customStyles = {
     content : {
@@ -24,26 +25,28 @@ export default class Guest extends React.Component {
     render() {
         return (
             <div>
+                <WingBlank>
                 <h1>고객님은 멤버쉽 회원이 아닙니다</h1>
                 <div>
-                <button onClick={() => {
+                <Button onClick={() => {
                     this.setState({
                         isOpen : true
                     })
-                }}>혜택보기</button>
-                <button onClick={this.props.onRegister}>가입하기</button>
+                }}>혜택보기</Button>
+                <Button type="primary" onClick={this.props.onRegister}>가입하기</Button>
                 </div>
                 <Modal
                     isOpen={this.state.isOpen}
                     style={customStyles}
                 >
                     <div>혜택!!!</div>
-                    <button onClick={()=>{
+                    <Button onClick={()=>{
                         this.setState({
                             isOpen : false
                         })
-                    }}>닫기</button>
+                    }}>닫기</Button>
                 </Modal>
+                </WingBlank>
             </div>
         )
     }

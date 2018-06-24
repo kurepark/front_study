@@ -1,3 +1,4 @@
+import 'antd-mobile/dist/antd-mobile.css';
 import React from 'react';
 import ReactDom from 'react-dom';
 import Counter from "./components/Counter";

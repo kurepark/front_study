@@ -29,6 +29,7 @@
     "webpack-cli": "^3.0.8"
   },
   "dependencies": {
+    "antd-mobile": "^2.2.0",
     "css-loader": "^0.28.11",
     "eslint-loader": "^2.0.0",
     "react-modal": "^3.4.5",

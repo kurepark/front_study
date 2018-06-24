@@ -1,5 +1,6 @@
 import React from 'react';
 import {Guest,Trial,Member} from '../components/membership/index';
+import MainDrawer from "../components/MainDrawer";
 
 class MembershipHome extends React.Component {
     constructor() {
@@ -28,11 +29,19 @@ class MembershipHome extends React.Component {
             membershipLevel : 'guest'
         });
     }
+
+    withMainDrawer(component){
+        return (
+            <MainDrawer>
+                {component}
+            </MainDrawer>
+        );
+    }
     render() {
         switch (this.state.membershipLevel) {
-            case 'guest' : return <Guest onRegister={this.onRegister} />; //함수자체를 전달
-            case 'trial' : return <Trial onUnRegister={this.onUnRegister}  />;
-            case 'member' : return <Member onUnRegister={this.onUnRegister} />;
+            case 'guest' : return this.withMainDrawer(<Guest onRegister={this.onRegister} />); //함수자체를 전달
+            case 'trial' : return this.withMainDrawer(<Trial onUnRegister={this.onUnRegister} />);
+            case 'member' : return this.withMainDrawer(<Member onUnRegister={this.onUnRegister} />);
             default : return <Guest/>;
         }
     }
