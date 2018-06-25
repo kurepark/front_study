@@ -1,31 +1,31 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Guest,Trial,Member} from '../components/membership/index';
 import MainDrawer from "../components/MainDrawer";
 import MembershipLevelType from "../enums/MembershipLevelType";
 
 class MembershipHome extends React.Component {
-    constructor() {
-        super();
-        this.state = {
+    constructor(props) {
+        super(props);
+       /* this.state = {
             membershipLevel : MembershipLevelType.GUEST
-        }
+        };*/
         this.onRegister = this.onRegister.bind(this);//onRegister에는 this를 바인딩 한다.
         //onRegister의 this를 항상 멤버쉼홈의 this로 박아버림.
         this.onUnRegister = this.onUnRegister.bind(this);
+
+        console.log(this.props)
     }
     //클래스의 메소드로 변경
     onRegister(membershipLevelType){
         if(membershipLevelType === MembershipLevelType.TRIAL){
             alert('30일 회원에 가입되었습니다');
-            this.setState({
-                membershipLevel : MembershipLevelType.TRIAL
-            });
         }else{
             alert('멤버쉽에 가입되었습니다');
-            this.setState({
-                membershipLevel : MembershipLevelType.MEMBER
-            });
         }
+        this.setState({
+            membershipLevel : MembershipLevelType
+        });
 
         console.log(this);//undefined
         //함수의 this는 선언이 아니라 실행되는 방법에 의해서 결정.
@@ -48,21 +48,19 @@ class MembershipHome extends React.Component {
     }
     render() {
         const {GUEST,TRIAL,MEMBER} = MembershipLevelType;//한 함수안에서 여러번쓸땐 이렇게 해체.
-        switch (this.state.membershipLevel) {
+        switch (this.props.membershipLevel) {
             case GUEST : return this.withMainDrawer(
-                <Guest
-                    onRegister={()=>{
-                        this.onRegister(MembershipLevelType.MEMBER)
-                    }}
-                    onLimitRegister={()=>{
-                        this.onRegister(MembershipLevelType.TRIAL)
-                    }}
-                />); //함수자체를 전달
-            case TRIAL : return this.withMainDrawer(<Trial onUnRegister={this.onUnRegister} />);
-            case MEMBER : return this.withMainDrawer(<Member onUnRegister={this.onUnRegister} />);
+                <Guest/>); //함수자체를 전달
+            case TRIAL : return this.withMainDrawer(<Trial />);
+            case MEMBER : return this.withMainDrawer(<Member />);
             default : return <Guest/>;
         }
     }
 }
-
-export default MembershipHome;
+const mapStateToProps = (state) => {
+    //console.log('mapStateToProps:', state );
+    return {
+        membershipLevel : state.membershipLevel
+    };
+};
+export default connect(mapStateToProps)(MembershipHome);//return할때 커넥트함수로

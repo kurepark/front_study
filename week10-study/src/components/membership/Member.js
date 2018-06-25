@@ -1,17 +1,21 @@
 import React from 'react';
 import ContentBox from './ContetnBox';
+import {Button,WingBlank} from 'antd-mobile';
+import {unRegister} from "../../actions/membershipAction";
+import {connect} from 'react-redux';
 
-export default class Member extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
+function Member(props) {
         return (
             <div>
-                <h1>고객님은 멤버쉽회원입니다</h1>
-                <ContentBox/>
-                <button onClick={this.props.onUnRegister}>해지하기</button>
+                <WingBlank>
+                    <h1>고객님은 멤버쉽회원입니다</h1>
+                    <ContentBox/>
+                    <Button type="warning" onClick={props.unRegister}>해지하기</Button>
+                </WingBlank>
             </div>
         )
-    }
 }
+
+export default connect(() => ({}), {
+    unRegister
+})(Member);

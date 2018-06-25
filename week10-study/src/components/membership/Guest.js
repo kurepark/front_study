@@ -1,6 +1,9 @@
 import React from 'react';
 import Modal from 'react-modal';
+import {connect} from 'react-redux';
 import {Button, WingBlank} from 'antd-mobile';
+import {changeMembershipLevel} from "../../actions/membershipAction";
+import MembershipLevelType from "../../enums/MembershipLevelType";
 
 const customStyles = {
     content : {
@@ -15,12 +18,13 @@ const customStyles = {
 
 Modal.setAppElement('#app');
 
-export default class Guest extends React.Component {
+class Guest extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpen : false
-        }
+        };
+        console.log(this.props);
     }
     render() {
         return (
@@ -28,13 +32,13 @@ export default class Guest extends React.Component {
                 <WingBlank>
                 <h1>고객님은 멤버쉽 회원이 아닙니다</h1>
                 <div>
-                <Button onClick={() => {
+                <Button type="default" onClick={() => {
                     this.setState({
                         isOpen : true
                     })
                 }}>혜택보기</Button>
-                    <Button type="primary" onClick={this.props.onLimitRegister}>30일 가입하기</Button>
-                    <Button type="default" onClick={this.props.onRegister}>정회원 가입하기</Button>
+                    <Button type="default" onClick={()=>{this.props.changeMembershipLevel(MembershipLevelType.TRIAL);}}>30일 가입하기</Button>
+                    <Button type="primary" onClick={()=>{this.props.changeMembershipLevel(MembershipLevelType.MEMBER)}}>정회원 가입하기</Button>
                 </div>
                 <Modal
                     isOpen={this.state.isOpen}
@@ -52,3 +56,13 @@ export default class Guest extends React.Component {
         )
     }
 }
+const mapStateToProps =(state) => {
+    return{
+        membershipLevel : state.membershipLevel
+    }
+};
+const mapDispatchToProps  = {
+  changeMembershipLevel
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Guest);

@@ -4,8 +4,9 @@ import ReactDom from 'react-dom';
 import Counter from "./components/Counter";
 import Button from "./components/Button";
 import App from './containers/App';
-import {createStore, combineReducers} from 'redux';//스토어생성
 import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+import {createStore, combineReducers,compose, applyMiddleware} from 'redux';//스토어생성
 import MembershipHome from './containers/MembershipHome';
 import membershipLevelReducer from "./reducers/membershipLevelReducer";
 
@@ -13,7 +14,10 @@ const store = createStore(
     combineReducers({
         membershipLevel : membershipLevelReducer
     }),
-    __REDUX_DEVTOOLS_EXTENSION__&&__REDUX_DEVTOOLS_EXTENSION__()
+    compose(
+        applyMiddleware(thunk),
+        __REDUX_DEVTOOLS_EXTENSION__ && __REDUX_DEVTOOLS_EXTENSION__()
+    )
 );
 console.log(store);
 
