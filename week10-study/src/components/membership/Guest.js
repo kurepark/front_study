@@ -2,8 +2,10 @@ import React from 'react';
 import Modal from 'react-modal';
 import {connect} from 'react-redux';
 import {Button, WingBlank} from 'antd-mobile';
+import axios from 'axios';
 import {changeMembershipLevel} from "../../actions/membershipAction";
 import MembershipLevelType from "../../enums/MembershipLevelType";
+import BenefitAdder from '../../components/BenefitAdder';
 
 const customStyles = {
     content : {
@@ -22,7 +24,8 @@ class Guest extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen : false
+            isOpen : false,
+            benefits : []
         };
         console.log(this.props);
     }
@@ -36,7 +39,8 @@ class Guest extends React.Component {
                     this.setState({
                         isOpen : true
                     })
-                }}>혜택보기</Button>
+                }}>혜택보기
+                </Button>
                     <Button type="default" onClick={()=>{this.props.changeMembershipLevel(MembershipLevelType.TRIAL);}}>30일 가입하기</Button>
                     <Button type="primary" onClick={()=>{this.props.changeMembershipLevel(MembershipLevelType.MEMBER)}}>정회원 가입하기</Button>
                 </div>
@@ -44,13 +48,32 @@ class Guest extends React.Component {
                     isOpen={this.state.isOpen}
                     style={customStyles}
                 >
-                    <div>혜택!!!</div>
                     <Button onClick={()=>{
                         this.setState({
                             isOpen : false
-                        })
+                        });
+                        axios.get('http://192.168.0.36:1337/benefits')
+                            .then(result => {console.log(result)
+                                this.setState({
+                                    benefits : result.data
+                                })
+                            })
+                            .catch(err => console.log(err));
                     }}>닫기</Button>
+                    <div>
+                        <ul>
+                            {this.state.benefits.map((benefit)=>{
+                                return (
+                                    <li key={benefit.id}>
+                                        {benefit.description}<br/>
+                                        {benefit.createdAt}
+
+                                    </li>
+                                )
+                            })}
+                        </ul></div>
                 </Modal>
+                    <BenefitAdder />
                 </WingBlank>
             </div>
         )
